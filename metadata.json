@@ -1,0 +1,6 @@
+{
+  "name": "PT Bintang Semesta Motor - Distributor Resmi Suku Cadang & Pelumas Motor",
+  "description": "Website profil perusahaan resmi PT Bintang Semesta Motor (BSM), distributor sparepart motor terpercaya dengan katalog produk, galeri testimoni, blog berita, sistem CMS, dan analitik real-time.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
