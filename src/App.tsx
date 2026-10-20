@@ -16,6 +16,7 @@ import { AnalyticsModal } from './components/AnalyticsModal';
 import { Footer } from './components/Footer';
 import { NotificationToast } from './components/NotificationToast';
 import { AdminLoginModal } from './components/AdminLoginModal';
+import { visitorTracker } from './services/realVisitorTracker';
 import { 
   ArrowRight, 
   ShieldCheck, 
@@ -57,18 +58,16 @@ export default function App() {
     return saved ? JSON.parse(saved) : INITIAL_BLOG_POSTS;
   });
 
-  // Real-time visitor simulation
-  const [activeLiveUsers, setActiveLiveUsers] = useState<number>(34);
+  // Pemantauan Pengunjung Riil Real-Time Terintegrasi Google Analytics 4 (GA4)
+  const [activeLiveUsers, setActiveLiveUsers] = useState<number>(() => visitorTracker.getActiveLiveCount());
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setActiveLiveUsers((prev) => {
-        const delta = Math.floor(Math.random() * 5) - 2;
-        return Math.max(18, Math.min(52, prev + delta));
-      });
-    }, 6000);
-    return () => clearInterval(interval);
+    const unsubscribe = visitorTracker.subscribe((trackerData) => {
+      setActiveLiveUsers(trackerData.activeLiveUsers);
+    });
+    return () => unsubscribe();
   }, []);
+
 
   // In-app Push Notification State
   const [currentNotification, setCurrentNotification] = useState<{
@@ -148,6 +147,10 @@ export default function App() {
 
   const navigateTo = (view: PageView) => {
     setActiveView(view);
+    visitorTracker.trackGoogleEvent('page_view', {
+      page_title: `PT BSM - ${view.toUpperCase()}`,
+      page_path: `/${view}`
+    });
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 

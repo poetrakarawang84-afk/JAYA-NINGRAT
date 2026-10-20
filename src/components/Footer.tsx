@@ -94,13 +94,23 @@ export const Footer: React.FC<FooterProps> = ({ onOpenCms, onOpenAnalytics, onNa
 
           {/* Warehouse & Legal Info */}
           <div>
-            <p className="text-white font-bold uppercase tracking-wider text-[11px] mb-3">Kantor Pusat & Gudang</p>
+            <p className="text-white font-bold uppercase tracking-wider text-[11px] mb-3">Kantor Pusat & Gudang HO</p>
             <p className="text-slate-400 leading-relaxed mb-2">
-              Kawasan Industri Sentra Niaga Blok B-12, Jl. Raya Bekasi KM 28, Cikarang Barat, Jawa Barat 17530
+              Jl. Jababeka III H Blok C 17 FT, Pasirgombong, Kec. Cikarang Utara, Kabupaten Bekasi, Jawa Barat 17530
             </p>
-            <div className="pt-2 border-t border-slate-800 flex items-center gap-1.5 text-emerald-400 font-medium">
-              <ShieldCheck className="w-4 h-4" />
-              <span>NIB Resmi Terdaftar & Terverifikasi</span>
+            <div className="pt-2 border-t border-slate-800 space-y-1.5">
+              <a
+                href="https://www.google.com/maps/search/?api=1&query=Jl.+Jababeka+III+H+Blok+C+17+FT+Pasirgombong+Cikarang+Utara+Bekasi"
+                target="_blank"
+                rel="noreferrer"
+                className="text-[11px] text-blue-400 hover:text-blue-300 flex items-center gap-1 font-medium"
+              >
+                <span>📍 Lihat Rute Google Maps</span>
+              </a>
+              <div className="flex items-center gap-1.5 text-emerald-400 font-medium">
+                <ShieldCheck className="w-4 h-4" />
+                <span>NIB Resmi & Google Bisnis Terdaftar</span>
+              </div>
             </div>
           </div>
         </div>

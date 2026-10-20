@@ -3,6 +3,8 @@ import { BarChart3, Settings, Menu, X, MessageCircle, Lock } from 'lucide-react'
 import { BsmLogo } from './BsmLogo';
 import { PageView } from '../types';
 
+import { visitorTracker } from '../services/realVisitorTracker';
+
 interface HeaderProps {
   activeView: PageView;
   setActiveView: (view: PageView) => void;
@@ -21,6 +23,7 @@ export const Header: React.FC<HeaderProps> = ({
   const handleNavigate = (view: PageView) => {
     setActiveView(view);
     setMobileMenuOpen(false);
+    visitorTracker.trackGoogleEvent('page_view', { page_path: `/${view}` });
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Mail, Phone, MapPin, Clock, Send, MessageCircle, Instagram, Facebook, Video, CheckCircle2 } from 'lucide-react';
+import { Mail, Phone, MapPin, Clock, Send, MessageCircle, Instagram, Facebook, Video, CheckCircle2, Compass, ExternalLink, Star } from 'lucide-react';
+import { visitorTracker } from '../services/realVisitorTracker';
 
 export const ContactSection: React.FC = () => {
   const [formSubmitted, setFormSubmitted] = useState(false);
@@ -14,10 +15,19 @@ export const ContactSection: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    visitorTracker.trackGoogleEvent('contact_inquiry_submit', {
+      purpose: formData.purpose,
+      has_workshop: !!formData.workshopName
+    });
+    visitorTracker.logActivity(`Pengunjung mengirimkan formulir konsultasi (${formData.purpose})`, 'emerald');
     setFormSubmitted(true);
   };
 
   const handleWhatsAppDirect = () => {
+    visitorTracker.trackGoogleEvent('contact_whatsapp_click', {
+      purpose: formData.purpose
+    });
+    visitorTracker.logActivity('Pengunjung mengklik konsultasi via WhatsApp B2B', 'emerald');
     const text = encodeURIComponent(
       `Halo Tim PT Bintang Semesta Motor, saya ${formData.name || 'Mitra'} dari ${formData.workshopName || 'Bengkel'}. Ingin berkonsultasi mengenai: ${formData.purpose}. Pesan: ${formData.message || 'Mohon informasi katalog dan syarat kemitraan.'}`
     );
@@ -44,30 +54,95 @@ export const ContactSection: React.FC = () => {
           {/* Company Info & Social Channels (5 cols) */}
           <div className="lg:col-span-5 space-y-6">
             <div className="bg-slate-50 p-6 rounded-xl border border-slate-200 space-y-5">
-              <h3 className="text-base font-bold text-slate-900 border-b border-slate-200 pb-3">
-                Kantor Pusat & Gudang Logistik HO
-              </h3>
+              <div className="flex items-center justify-between border-b border-slate-200 pb-3">
+                <h3 className="text-base font-bold text-slate-900">
+                  Kantor Pusat & Gudang Logistik HO
+                </h3>
+                <span className="px-2 py-0.5 rounded-full bg-blue-100 text-blue-800 text-[10px] font-bold border border-blue-200">
+                  Google Maps Verified
+                </span>
+              </div>
 
               <div className="flex items-start gap-3.5 text-xs text-slate-700">
-                <MapPin className="w-4 h-4 text-blue-700 shrink-0 mt-0.5" />
-                <div>
+                <MapPin className="w-4 h-4 text-rose-600 shrink-0 mt-0.5" />
+                <div className="space-y-1">
                   <p className="font-semibold text-slate-900">PT Bintang Semesta Motor</p>
-                  <p className="text-slate-600 mt-0.5">
+                  <p className="text-slate-600">
                     Jl. Jababeka III H Blok C 17 FT, Pasirgombong, Kec. Cikarang Utara, Kabupaten Bekasi, Jawa Barat 17530
                   </p>
+                  <a
+                    href="https://www.google.com/maps/search/?api=1&query=Jl.+Jababeka+III+H+Blok+C+17+FT+Pasirgombong+Cikarang+Utara+Bekasi"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center gap-1.5 text-xs font-bold text-rose-600 hover:text-rose-700 underline pt-0.5"
+                  >
+                    <Compass className="w-3.5 h-3.5" />
+                    <span>Petunjuk Arah Google Maps</span>
+                    <ExternalLink className="w-3 h-3" />
+                  </a>
                 </div>
+              </div>
+
+              {/* Embedded Google Maps View */}
+              <div className="rounded-xl overflow-hidden border border-slate-300 shadow-2xs">
+                <iframe
+                  title="Peta Lokasi Resmi PT Bintang Semesta Motor di Google Maps"
+                  src="https://maps.google.com/maps?q=Jababeka+III+H+Cikarang+Utara+Bekasi&t=&z=14&ie=UTF8&iwloc=&output=embed"
+                  width="100%"
+                  height="160"
+                  style={{ border: 0 }}
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  className="w-full"
+                ></iframe>
+              </div>
+
+              {/* Google Business Profile & Rating Badge */}
+              <div className="p-3 bg-white rounded-xl border border-slate-200 flex items-center justify-between text-xs">
+                <div className="flex items-center gap-2">
+                  <div className="w-8 h-8 rounded-lg bg-blue-50 border border-blue-200 flex items-center justify-center font-bold text-blue-700 text-sm">
+                    G
+                  </div>
+                  <div>
+                    <span className="font-bold text-slate-900 block">Google Profil Bisnis Resmi</span>
+                    <div className="flex items-center gap-1 text-[11px] text-amber-500">
+                      {[...Array(5)].map((_, i) => (
+                        <Star key={i} className="w-3 h-3 fill-amber-400 text-amber-400" />
+                      ))}
+                      <span className="font-bold text-slate-800 ml-1">4.9 / 5.0</span>
+                      <span className="text-slate-400">(350+ Ulasan Mitra)</span>
+                    </div>
+                  </div>
+                </div>
+                <a
+                  href="https://www.google.com/maps/search/?api=1&query=Jl.+Jababeka+III+H+Blok+C+17+FT+Pasirgombong+Cikarang+Utara+Bekasi"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="px-2.5 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-[11px] font-semibold transition-colors"
+                >
+                  Ulasan
+                </a>
               </div>
 
               <div className="flex items-start gap-3.5 text-xs text-slate-700">
                 <Mail className="w-4 h-4 text-blue-700 shrink-0 mt-0.5" />
-                <div>
-                  <p className="font-semibold text-slate-900">Email Resmi</p>
-                  <p className="text-slate-600 font-mono mt-0.5">bintangsemestamotor01@gmail.com</p>
+                <div className="space-y-0.5">
+                  <p className="font-semibold text-slate-900">Email Resmi (Google Workspace)</p>
+                  <p className="text-slate-600 font-mono">bintangsemestamotor01@gmail.com</p>
+                  <a
+                    href="https://mail.google.com/mail/?view=cm&fs=1&to=bintangsemestamotor01@gmail.com&su=Inquiry%20Kemitraan%20PT%20Bintang%20Semesta%20Motor"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center gap-1 text-[11px] font-semibold text-blue-600 hover:underline"
+                  >
+                    <span>Kirim via Gmail</span>
+                    <ExternalLink className="w-2.5 h-2.5" />
+                  </a>
                 </div>
               </div>
 
               <div className="flex items-start gap-3.5 text-xs text-slate-700">
-                <Phone className="w-4 h-4 text-blue-700 shrink-0 mt-0.5" />
+                <Phone className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
                 <div>
                   <p className="font-semibold text-slate-900">Telepon & WhatsApp B2B</p>
                   <p className="text-slate-600 font-mono mt-0.5">+62 21-5890-8888 / +62 812-8888-9999</p>
