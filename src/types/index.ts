@@ -83,3 +83,6 @@ export interface ContactMessage {
   message: string;
   date: string;
 }
+
+export type PageView = 'home' | 'katalog' | 'testimoni' | 'blog' | 'kontak' | 'cms' | 'analytics';
+

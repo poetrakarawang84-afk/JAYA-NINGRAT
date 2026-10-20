@@ -7,7 +7,10 @@ interface HeroSectionProps {
   onContactClick: () => void;
 }
 
-export const HeroSection: React.FC<HeroSectionProps> = ({ onExploreProducts, onContactClick }) => {
+export const HeroSection: React.FC<HeroSectionProps> = ({ 
+  onExploreProducts, 
+  onContactClick
+}) => {
   return (
     <section className="relative overflow-hidden bg-slate-900 text-white">
       {/* Background Image with Contrast Scrim */}
@@ -24,7 +27,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onExploreProducts, onC
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28">
         <div className="max-w-3xl">
           {/* Subtle Trust Label with Official Logo */}
-          <div className="inline-flex items-center gap-2.5 bg-slate-850/80 bg-slate-900/80 backdrop-blur-sm border border-slate-700/70 px-3 py-1.5 rounded-lg text-xs font-semibold text-blue-200 mb-6 shadow-sm">
+          <div className="inline-flex items-center gap-2.5 bg-slate-900/80 backdrop-blur-sm border border-slate-700/70 px-3 py-1.5 rounded-lg text-xs font-semibold text-blue-200 mb-6 shadow-sm">
             <BsmLogo size="sm" className="w-5 h-5" />
             <span>Distributor Resmi Sparepart & Pelumas Motor Indonesia</span>
           </div>
@@ -64,6 +67,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onExploreProducts, onC
               <span>Chat WhatsApp B2B</span>
             </a>
           </div>
+
 
           {/* Proof Adjacency Metrics */}
           <div className="pt-8 border-t border-slate-800/80 grid grid-cols-2 sm:grid-cols-4 gap-6">

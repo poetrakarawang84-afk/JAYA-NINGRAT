@@ -1,13 +1,22 @@
 import React from 'react';
 import { ShieldCheck, Heart } from 'lucide-react';
 import { BsmLogo } from './BsmLogo';
+import { PageView } from '../types';
 
 interface FooterProps {
   onOpenCms: () => void;
   onOpenAnalytics: () => void;
+  onNavigate?: (view: PageView) => void;
 }
 
-export const Footer: React.FC<FooterProps> = ({ onOpenCms, onOpenAnalytics }) => {
+export const Footer: React.FC<FooterProps> = ({ onOpenCms, onOpenAnalytics, onNavigate }) => {
+  const handleNav = (view: PageView) => {
+    if (onNavigate) {
+      onNavigate(view);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+
   return (
     <footer className="bg-slate-900 text-slate-400 text-xs py-12 border-t border-slate-800">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -23,14 +32,36 @@ export const Footer: React.FC<FooterProps> = ({ onOpenCms, onOpenAnalytics }) =>
             </p>
           </div>
 
-          {/* Quick Nav */}
+          {/* Quick Nav (Separate Pages) */}
           <div>
-            <p className="text-white font-bold uppercase tracking-wider text-[11px] mb-3">Navigasi Utama</p>
+            <p className="text-white font-bold uppercase tracking-wider text-[11px] mb-3">Halaman Website</p>
             <ul className="space-y-2">
-              <li><a href="#produk" className="hover:text-white transition-colors">Katalog Sparepart</a></li>
-              <li><a href="#testimoni" className="hover:text-white transition-colors">Testimoni Bengkel Mitra</a></li>
-              <li><a href="#blog" className="hover:text-white transition-colors">Berita & Tips Otomotif</a></li>
-              <li><a href="#kontak" className="hover:text-white transition-colors">Hubungi Sales & Gudang</a></li>
+              <li>
+                <button onClick={() => handleNav('home')} className="hover:text-white transition-colors text-left">
+                  Beranda Utama
+                </button>
+              </li>
+              <li>
+                <button onClick={() => handleNav('katalog')} className="hover:text-white transition-colors text-left">
+                  Katalog Suku Cadang Resmi
+                </button>
+              </li>
+              <li>
+                <button onClick={() => handleNav('testimoni')} className="hover:text-white transition-colors text-left">
+                  Testimoni Bengkel Mitra
+                </button>
+              </li>
+
+              <li>
+                <button onClick={() => handleNav('blog')} className="hover:text-white transition-colors text-left">
+                  Berita & Tips Otomotif
+                </button>
+              </li>
+              <li>
+                <button onClick={() => handleNav('kontak')} className="hover:text-white transition-colors text-left">
+                  Hubungi Sales & Gudang
+                </button>
+              </li>
             </ul>
           </div>
 
@@ -61,24 +92,30 @@ export const Footer: React.FC<FooterProps> = ({ onOpenCms, onOpenAnalytics }) =>
             </ul>
           </div>
 
-          {/* Legal / Certifications */}
+          {/* Warehouse & Legal Info */}
           <div>
-            <p className="text-white font-bold uppercase tracking-wider text-[11px] mb-3">Standar Kualitas</p>
-            <div className="space-y-1.5 text-slate-400">
-              <p>· ISO 9001:2015 Manajemen Mutu</p>
-              <p>· Standar Nasional Indonesia (SNI)</p>
-              <p>· Sertifikasi JASO MB & API SL</p>
-              <p>· Garansi Pabrik 100% Produk Asli</p>
+            <p className="text-white font-bold uppercase tracking-wider text-[11px] mb-3">Kantor Pusat & Gudang</p>
+            <p className="text-slate-400 leading-relaxed mb-2">
+              Kawasan Industri Sentra Niaga Blok B-12, Jl. Raya Bekasi KM 28, Cikarang Barat, Jawa Barat 17530
+            </p>
+            <div className="pt-2 border-t border-slate-800 flex items-center gap-1.5 text-emerald-400 font-medium">
+              <ShieldCheck className="w-4 h-4" />
+              <span>NIB Resmi Terdaftar & Terverifikasi</span>
             </div>
           </div>
         </div>
 
         {/* Bottom Bar */}
-        <div className="pt-8 border-t border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px]">
-          <p>© {new Date().getFullYear()} PT Bintang Semesta Motor. Hak Cipta Dilindungi Undang-Undang.</p>
-          <p className="flex items-center gap-1.5 text-slate-500">
-            <span>Website Profil Resmi PT Bintang Semesta Motor</span>
-          </p>
+        <div className="pt-8 border-t border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4 text-slate-500 text-[11px]">
+          <p>© {new Date().getFullYear()} PT Bintang Semesta Motor (BSM). Seluruh hak cipta dilindungi undang-undang.</p>
+          <div className="flex items-center gap-4">
+            <button onClick={() => handleNav('kontak')} className="hover:text-slate-300">Hubungi Kami</button>
+            <span>·</span>
+            <button onClick={() => handleNav('katalog')} className="hover:text-slate-300">Katalog Produk</button>
+            <span>·</span>
+            <button onClick={onOpenCms} className="hover:text-slate-300">Login Karyawan (CMS)</button>
+          </div>
+
         </div>
       </div>
     </footer>
